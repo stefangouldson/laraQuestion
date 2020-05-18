@@ -15,7 +15,7 @@
                         @if($securityQuestion)
                         <b>{{ $securityQuestion->question }}</b>
                         <br />
-                        <input type="text" name="security_answer" id="security_answer" class="form-control @error('security_answer') is-valid @enderror" value="{{ old('security_answer') }}" autocomplete="off" required>
+                        <input type="text" name="security_answer" id="security_answer" class="form-control @error('security_answer') is-invalid @enderror" value="{{ old('security_answer') }}" autocomplete="off" required>
 
                         @error('security_answer')
                         <span class="invalid-feedback" role="alert">
