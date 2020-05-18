@@ -5,13 +5,30 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
+                <div class="card-header">{{ ($securityQuestion) __('Security Question') : _('Confirm Password') }}</div>
 
                 <div class="card-body">
                     {{ __('Please confirm your password before continuing.') }}
 
                     <form method="POST" action="{{ route('password.confirm') }}">
                         @csrf
+
+                        @if($securityQuestion)
+                        <b>{{ $securityQuestion->question }}</b>
+                        <br />
+                        <input type="text" name="security_answer" id="security_answer" class="form-control @error('security_answer') is-valid @enderror" value="{{ old('security_answer') }}" required>
+
+                        @error('security_answer')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+
+                        <button class="btn btn-primary" type="submit">
+                            {{ __('Confirm Answer') }}
+                        </button>
+
+                        @else
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
@@ -40,6 +57,7 @@
                                 @endif
                             </div>
                         </div>
+                        @endif
                     </form>
                 </div>
             </div>

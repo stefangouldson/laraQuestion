@@ -37,4 +37,27 @@ class ConfirmPasswordController extends Controller
     {
         $this->middleware('auth');
     }
+
+    public function showConfirmForm()
+    {
+        $securityQuestion = auth()->user()->securityQuestion;
+        return view('auth.passwords.confirm', compact('securityQuestion'));
+    }
+
+    public function confirm(Request $request)
+    {
+        if ($request->input('security_answer')){
+            if (auth()->user()->security_answer != $request->input('security_answer')){
+                return back()->withInput()->withErrors(['security_answer' => 'Sorry, wromg answer']);
+            }
+        } else {
+            $request->validate($this->rules(), $this->validationErrorMessages());
+        }
+
+        $this->resetPasswordConfirmationTimeout($request);
+
+        return $request->wantsJson()
+                    ? new Response('', 204)
+                    : redirect()->intended($this->redirectPath());
+    }
 }
