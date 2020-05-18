@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\SecurityQuestion;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use SecurityQuestionSeeder;
 
 class RegisterController extends Controller
 {
@@ -41,6 +43,12 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        $securityQuestions = SecurityQuestion::all();
+        return view('auth.register', compact('securityQuestions'));
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -68,6 +76,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'security_question_id' => $data['security_question_id'] ?? NULL,
+            'security_answer' => $data['security_answer'] ?? NULL,
         ]);
     }
 }
