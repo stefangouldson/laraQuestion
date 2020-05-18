@@ -5,10 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ ($securityQuestion) __('Security Question') : _('Confirm Password') }}</div>
+                <div class="card-header">{{ ($securityQuestion) ? __('Security Question') : __('Confirm Password') }}</div>
 
                 <div class="card-body">
-                    {{ __('Please confirm your password before continuing.') }}
 
                     <form method="POST" action="{{ route('password.confirm') }}">
                         @csrf
@@ -16,17 +15,19 @@
                         @if($securityQuestion)
                         <b>{{ $securityQuestion->question }}</b>
                         <br />
-                        <input type="text" name="security_answer" id="security_answer" class="form-control @error('security_answer') is-valid @enderror" value="{{ old('security_answer') }}" required>
+                        <input type="text" name="security_answer" id="security_answer" class="form-control @error('security_answer') is-valid @enderror" value="{{ old('security_answer') }}" autocomplete="off" required>
 
                         @error('security_answer')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-
-                        <button class="btn btn-primary" type="submit">
-                            {{ __('Confirm Answer') }}
-                        </button>
+                        <br>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">
+                                {{ __('Confirm Answer') }}
+                            </button>
+                        </div>
 
                         @else
 
