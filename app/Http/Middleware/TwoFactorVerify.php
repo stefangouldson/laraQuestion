@@ -21,7 +21,8 @@ class TwoFactorVerify
             return $next($request);
         }
 
-        $user->token_2fa = '5555';
+        $token = mt_rand(10000,99999);
+        $user->token_2fa =strval($token);
         $user->save();
 
 
