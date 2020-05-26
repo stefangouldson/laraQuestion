@@ -17,6 +17,8 @@ class AddSecurityQuestionsToUsersTable extends Migration
             $table->unsignedBigInteger('security_question_id')->nullable();
             $table->foreign('security_question_id')->references('id')->on('security_questions');
             $table->string('security_answer')->nullable();
+            $table->string('token_2fa')->nullable();
+            $table->datetime('token_2fa_expiry')->nullable();
         });
     }
 

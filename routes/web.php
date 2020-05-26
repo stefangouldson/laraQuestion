@@ -19,5 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('password.confirm');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('two_factor');
 Route::get('/reports', 'HomeController@index')->name('home')->middleware('password.confirm');
+
+Route::get('2fa', 'TwoFactorController@showTwoFactorForm');
+Route::post('2fa', 'TwoFactorController@verifyTwoFactor');
